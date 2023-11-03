@@ -13,13 +13,7 @@ const App = () => {
 
     const fetchUsersAndUpdateState = async (search) => {
         const response = await fetch(
-            `https://api.github.com/search/users?q=${search} in:name&sort=followers&order=desc`,
-            {
-                headers: {
-                    Accept: "application/vnd.github+json",
-                    Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`,
-                },
-            }
+            `https://api.github.com/search/users?q=${search} in:name&sort=followers&order=desc`
         );
         const data = await response.json();
         if (data.items) {
@@ -27,7 +21,9 @@ const App = () => {
             setError();
         } else {
             setUserResults([]);
-            setError(data.message || "Something went wrong, please try in sometime!");
+            setError(
+                data.message || "Something went wrong, please try in sometime!"
+            );
         }
     };
 
@@ -57,11 +53,7 @@ const App = () => {
                 setSearchName={setSearchName}
             />
             <UsersTable userResults={userResults} />
-            {
-                error
-                ? <Alert severity="error">{error}</Alert>
-                : null
-            }
+            {error ? <Alert severity="error">{error}</Alert> : null}
         </Stack>
     );
 };
